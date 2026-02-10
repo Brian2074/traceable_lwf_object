@@ -1,0 +1,84 @@
+2026-02-09 12:19:48,042 - root - INFO - Finetune stage...
+2026-02-09 12:19:56,504 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #1, Task: 1 loss: 0.551, accuracy: 16.16, lr: 0.2, sparsity: 0.000
+2026-02-09 12:19:57,470 - root - INFO - In validate()-> Val Ep. #1 loss: 0.542, accuracy: 17.30, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:06,418 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #2, Task: 1 loss: 0.452, accuracy: 21.08, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:06,968 - root - INFO - In validate()-> Val Ep. #2 loss: 0.446, accuracy: 22.40, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:15,658 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #3, Task: 1 loss: 0.423, accuracy: 23.14, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:16,156 - root - INFO - In validate()-> Val Ep. #3 loss: 0.414, accuracy: 26.30, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:24,951 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #4, Task: 1 loss: 0.400, accuracy: 27.52, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:25,505 - root - INFO - In validate()-> Val Ep. #4 loss: 0.407, accuracy: 27.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:34,154 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #5, Task: 1 loss: 0.387, accuracy: 29.10, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:34,705 - root - INFO - In validate()-> Val Ep. #5 loss: 0.376, accuracy: 36.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:43,396 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #6, Task: 1 loss: 0.372, accuracy: 31.72, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:43,951 - root - INFO - In validate()-> Val Ep. #6 loss: 0.367, accuracy: 40.40, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:20:52,631 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #7, Task: 1 loss: 0.360, accuracy: 34.38, lr: 0.2, sparsity: 0.000
+2026-02-09 12:20:53,164 - root - INFO - In validate()-> Val Ep. #7 loss: 0.350, accuracy: 43.40, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:21:01,775 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #8, Task: 1 loss: 0.350, accuracy: 37.84, lr: 0.2, sparsity: 0.000
+2026-02-09 12:21:02,252 - root - INFO - In validate()-> Val Ep. #8 loss: 0.343, accuracy: 35.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:21:10,952 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #9, Task: 1 loss: 0.342, accuracy: 38.64, lr: 0.2, sparsity: 0.000
+2026-02-09 12:21:11,511 - root - INFO - In validate()-> Val Ep. #9 loss: 0.327, accuracy: 45.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:21:20,772 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #10, Task: 1 loss: 0.330, accuracy: 43.36, lr: 0.2, sparsity: 0.000
+2026-02-09 12:21:21,325 - root - INFO - In validate()-> Val Ep. #10 loss: 0.318, accuracy: 46.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:57:16,537 - root - INFO - Finetune stage...
+2026-02-09 12:57:26,939 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #1, Task: 1 loss: 0.520, accuracy: 14.18, lr: 0.2, sparsity: 0.000
+2026-02-09 12:57:27,563 - root - INFO - In validate()-> Val Ep. #1 loss: 0.448, accuracy: 14.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:57:37,693 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #2, Task: 1 loss: 0.426, accuracy: 19.50, lr: 0.2, sparsity: 0.000
+2026-02-09 12:57:38,340 - root - INFO - In validate()-> Val Ep. #2 loss: 0.413, accuracy: 24.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:57:49,319 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #3, Task: 1 loss: 0.392, accuracy: 25.22, lr: 0.2, sparsity: 0.000
+2026-02-09 12:57:49,967 - root - INFO - In validate()-> Val Ep. #3 loss: 0.374, accuracy: 31.80, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:58:01,470 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #4, Task: 1 loss: 0.369, accuracy: 30.04, lr: 0.2, sparsity: 0.000
+2026-02-09 12:58:02,132 - root - INFO - In validate()-> Val Ep. #4 loss: 0.354, accuracy: 38.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:58:13,597 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #5, Task: 1 loss: 0.350, accuracy: 33.98, lr: 0.2, sparsity: 0.000
+2026-02-09 12:58:14,264 - root - INFO - In validate()-> Val Ep. #5 loss: 0.335, accuracy: 41.70, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:58:25,800 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #6, Task: 1 loss: 0.333, accuracy: 37.98, lr: 0.2, sparsity: 0.000
+2026-02-09 12:58:26,456 - root - INFO - In validate()-> Val Ep. #6 loss: 0.320, accuracy: 46.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:58:38,059 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #7, Task: 1 loss: 0.320, accuracy: 41.02, lr: 0.2, sparsity: 0.000
+2026-02-09 12:58:38,713 - root - INFO - In validate()-> Val Ep. #7 loss: 0.301, accuracy: 47.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:58:49,854 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #8, Task: 1 loss: 0.307, accuracy: 43.40, lr: 0.2, sparsity: 0.000
+2026-02-09 12:58:50,542 - root - INFO - In validate()-> Val Ep. #8 loss: 0.290, accuracy: 48.80, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:59:01,897 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #9, Task: 1 loss: 0.297, accuracy: 44.74, lr: 0.2, sparsity: 0.000
+2026-02-09 12:59:02,570 - root - INFO - In validate()-> Val Ep. #9 loss: 0.277, accuracy: 52.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 12:59:13,777 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #10, Task: 1 loss: 0.283, accuracy: 48.00, lr: 0.2, sparsity: 0.000
+2026-02-09 12:59:14,442 - root - INFO - In validate()-> Val Ep. #10 loss: 0.269, accuracy: 53.80, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:03:29,623 - root - INFO - Finetune stage...
+2026-02-09 14:03:45,297 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #1, Task: 1 loss: 0.494, accuracy: 16.78, lr: 0.2, sparsity: 0.000
+2026-02-09 14:03:46,323 - root - INFO - In validate()-> Val Ep. #1 loss: 0.421, accuracy: 23.50, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:04:00,887 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #2, Task: 1 loss: 0.392, accuracy: 22.00, lr: 0.2, sparsity: 0.000
+2026-02-09 14:04:01,925 - root - INFO - In validate()-> Val Ep. #2 loss: 0.376, accuracy: 26.40, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:04:15,156 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #3, Task: 1 loss: 0.356, accuracy: 27.14, lr: 0.2, sparsity: 0.000
+2026-02-09 14:04:16,078 - root - INFO - In validate()-> Val Ep. #3 loss: 0.342, accuracy: 32.70, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:04:30,024 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #4, Task: 1 loss: 0.333, accuracy: 30.78, lr: 0.2, sparsity: 0.000
+2026-02-09 14:04:30,983 - root - INFO - In validate()-> Val Ep. #4 loss: 0.322, accuracy: 36.80, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:04:45,251 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #5, Task: 1 loss: 0.314, accuracy: 35.90, lr: 0.2, sparsity: 0.000
+2026-02-09 14:04:46,185 - root - INFO - In validate()-> Val Ep. #5 loss: 0.295, accuracy: 44.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:05:00,844 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #6, Task: 1 loss: 0.297, accuracy: 39.54, lr: 0.2, sparsity: 0.000
+2026-02-09 14:05:01,788 - root - INFO - In validate()-> Val Ep. #6 loss: 0.279, accuracy: 45.20, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:05:16,361 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #7, Task: 1 loss: 0.283, accuracy: 42.86, lr: 0.2, sparsity: 0.000
+2026-02-09 14:05:17,333 - root - INFO - In validate()-> Val Ep. #7 loss: 0.271, accuracy: 46.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:05:31,353 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #8, Task: 1 loss: 0.271, accuracy: 44.60, lr: 0.2, sparsity: 0.000
+2026-02-09 14:05:32,383 - root - INFO - In validate()-> Val Ep. #8 loss: 0.251, accuracy: 52.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:05:46,139 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #9, Task: 1 loss: 0.262, accuracy: 46.56, lr: 0.2, sparsity: 0.000
+2026-02-09 14:05:47,136 - root - INFO - In validate()-> Val Ep. #9 loss: 0.241, accuracy: 55.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:06:01,303 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #10, Task: 1 loss: 0.250, accuracy: 49.62, lr: 0.2, sparsity: 0.000
+2026-02-09 14:06:02,306 - root - INFO - In validate()-> Val Ep. #10 loss: 0.232, accuracy: 56.10, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:19:21,410 - root - INFO - Finetune stage...
+2026-02-09 14:19:36,538 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #1, Task: 1 loss: 0.494, accuracy: 16.78, lr: 0.2, sparsity: 0.000
+2026-02-09 14:19:37,421 - root - INFO - In validate()-> Val Ep. #1 loss: 0.421, accuracy: 23.50, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:19:50,662 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #2, Task: 1 loss: 0.392, accuracy: 22.00, lr: 0.2, sparsity: 0.000
+2026-02-09 14:19:51,543 - root - INFO - In validate()-> Val Ep. #2 loss: 0.376, accuracy: 26.40, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:20:05,720 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #3, Task: 1 loss: 0.356, accuracy: 27.14, lr: 0.2, sparsity: 0.000
+2026-02-09 14:20:06,608 - root - INFO - In validate()-> Val Ep. #3 loss: 0.342, accuracy: 32.70, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:20:19,495 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #4, Task: 1 loss: 0.333, accuracy: 30.78, lr: 0.2, sparsity: 0.000
+2026-02-09 14:20:20,309 - root - INFO - In validate()-> Val Ep. #4 loss: 0.322, accuracy: 36.80, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:20:32,589 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #5, Task: 1 loss: 0.314, accuracy: 35.90, lr: 0.2, sparsity: 0.000
+2026-02-09 14:20:33,401 - root - INFO - In validate()-> Val Ep. #5 loss: 0.295, accuracy: 44.90, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:20:47,187 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #6, Task: 1 loss: 0.297, accuracy: 39.54, lr: 0.2, sparsity: 0.000
+2026-02-09 14:20:48,460 - root - INFO - In validate()-> Val Ep. #6 loss: 0.279, accuracy: 45.20, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:21:03,460 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #7, Task: 1 loss: 0.283, accuracy: 42.86, lr: 0.2, sparsity: 0.000
+2026-02-09 14:21:04,458 - root - INFO - In validate()-> Val Ep. #7 loss: 0.271, accuracy: 46.60, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:21:19,505 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #8, Task: 1 loss: 0.271, accuracy: 44.60, lr: 0.2, sparsity: 0.000
+2026-02-09 14:21:20,440 - root - INFO - In validate()-> Val Ep. #8 loss: 0.251, accuracy: 52.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:21:35,108 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #9, Task: 1 loss: 0.262, accuracy: 46.56, lr: 0.2, sparsity: 0.000
+2026-02-09 14:21:36,052 - root - INFO - In validate()-> Val Ep. #9 loss: 0.241, accuracy: 55.00, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
+2026-02-09 14:21:50,474 - root - INFO - In baseline_cifar100_acc.txt()-> Train Ep. #10, Task: 1 loss: 0.250, accuracy: 49.62, lr: 0.2, sparsity: 0.000
+2026-02-09 14:21:51,368 - root - INFO - In validate()-> Val Ep. #10 loss: 0.232, accuracy: 56.10, sparsity: 0.000, task1 ratio: 1.000, zero ratio: 0.000
