@@ -41,7 +41,29 @@ The system supports `cifar100`, `tiny_imagenet`, and `mini_imagenet`.
 
 ---
 
-## How to Run
+## Running with Docker (Recommended)
+
+To simplify environment setup, you can use Docker Compose.
+
+### 1. Build and Run
+```bash
+docker-compose -f docker/docker-compose.yml up --build
+```
+This command will:
+*   Build the Docker image using `docker/Dockerfile`.
+*   Start the Server container.
+*   Start 2 Client containers automatically.
+
+### 2. Scale Clients
+To run more clients (e.g., 5 clients):
+```bash
+docker-compose -f docker/docker-compose.yml up --scale client1=1 --scale client2=4
+```
+*Note: You may need to duplicate client services in `docker-compose.yml` to assign unique `client_id`s properly, as the current compose file hardcodes `client_id` in the command.*
+
+---
+
+## Running Manually
 
 You need to run the Server and Clients in separate terminals.
 
@@ -106,8 +128,7 @@ python start_client.py --client_id 2 ...
 
 ### 3. Data Partitioning (Implicit)
 This repository uses `client_id` to partition data implicitly or log results.
-*   **Note**: The current implementation of `iCIFAR100` and other datasets (like in `src/utils/server_utils.py` or manager logic) might imply iid or non-iid splits based on how `client_id` is used. 
-*   **Verification**: Ensure your `num_users` or data split logic in `src/option.py` or `src/manager.py` supports the number of clients you are spawning. The default `args.num_clients` in `option.py` defaults to 2. If you run 3 clients, ensure you also pass `--num_clients 3` to **ALL** clients and the server so the data splitting logic (if dependent on this arg) remains consistent.
+*   **Verification**: Ensure your `num_users` or data split logic in `src/option.py` uses consistent seeds across all clients.
 
 **Best Practice**: Always pass the same `--num_clients` and `--seed` to all instances (Server and Clients) to ensure consistent data splitting if the split happens locally.
 
@@ -117,9 +138,4 @@ python start_server.py --num_clients 10 --seed 2024
 
 # Client 0
 python start_client.py --client_id 0 --num_clients 10 --seed 2024
-
-# ...
-
-# Client 9
-python start_client.py --client_id 9 --num_clients 10 --seed 2024
 ```
