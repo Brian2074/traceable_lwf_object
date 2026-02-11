@@ -5,7 +5,7 @@ This is the implementation code of the CVPR 2024 paper "**Traceable Federated Co
 
 ## Framework:
 
-![overview](./fig/overview.png)
+![overview](../fig/overview.png)
 
 
 ## Prerequisites:
@@ -37,7 +37,7 @@ python main.py
 
 ## Performance:
 
-![performance](./fig/performance.png)
+![performance](../fig/performance.png)
 
 ## Acknowledge:
 
