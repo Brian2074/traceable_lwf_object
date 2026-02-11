@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: tagfcl:latest
+    container_name: tagfcl_client_${CLIENT_ID:-0}
+    command: python src/start_client.py --server_address ${SERVER_ADDRESS:-server:8080} --client_id ${CLIENT_ID:-0}
+    volumes:
+      - ../src:/app/src
+      - ../data:/app/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

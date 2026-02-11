@@ -8,8 +8,8 @@ services:
     image: tagfcl:latest
     container_name: tagfcl_server
     command: python src/start_server.py
-    # ports:
-    #   - "8080:8080" # Flower Server Port
+    ports:
+      - "8080:8080" # Flower Server Port
     volumes:
       - ../src:/app/src
     deploy:

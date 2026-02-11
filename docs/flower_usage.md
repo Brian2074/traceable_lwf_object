@@ -43,23 +43,41 @@ The system supports `cifar100`, `tiny_imagenet`, and `mini_imagenet`.
 
 ## Running with Docker (Recommended)
 
-To simplify environment setup, you can use Docker Compose.
+This project provides separate Docker Compose files for Server and Client deployment, as well as an all-in-one file for local testing.
 
-### 1. Build and Run
+### 1. Local Testing (All-in-One)
+To run everything (Server + 2 Clients) on a single machine:
 ```bash
 docker-compose -f docker/docker-compose.yml up --build
 ```
-This command will:
-*   Build the Docker image using `docker/Dockerfile`.
-*   Start the Server container.
-*   Start 2 Client containers automatically.
 
-### 2. Scale Clients
-To run more clients (e.g., 5 clients):
+### 2. Distributed Deployment (Production)
+
+#### Server Side
+On the **Server Machine**:
 ```bash
-docker-compose -f docker/docker-compose.yml up --scale client1=1 --scale client2=4
+docker-compose -f docker/server-compose.yml up -d
 ```
-*Note: You may need to duplicate client services in `docker-compose.yml` to assign unique `client_id`s properly, as the current compose file hardcodes `client_id` in the command.*
+*   This starts the server on port `8080`.
+*   Ensure port `8080` is exposed to the internet/intranet.
+
+#### Client Side
+On **each Client Machine**, use `client-compose.yml`. You can configure it dynamically using environment variables:
+
+1.  **Start Client 0** (connecting to Server at 192.168.1.100):
+    ```bash
+    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=0 docker-compose -f docker/client-compose.yml up -d
+    ```
+
+2.  **Start Client 1** (on another machine):
+    ```bash
+    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=1 docker-compose -f docker/client-compose.yml up -d
+    ```
+
+**Environment Variables**:
+*   `SERVER_ADDRESS`: IP and Port of the Flower Server (default: `server:8080`).
+*   `CLIENT_ID`: Unique ID for the client (default: `0`).
+*   `NUM_CLIENTS`: (Server only) Minimum clients to start a round (default: `2`).
 
 ---
 
@@ -139,3 +157,7 @@ python start_server.py --num_clients 10 --seed 2024
 # Client 0
 python start_client.py --client_id 0 --num_clients 10 --seed 2024
 ```
+
+---
+
+
