@@ -18,6 +18,7 @@ services:
     volumes:
       - ../src:/app/src
       - ../datasets:/app/datasets
+      - ../runs:/app/runs
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     shm_size: '4gb'
