@@ -14,13 +14,14 @@ def main():
     parser = argparse.ArgumentParser("HuggingFace to YOLO Converter")
     parser.add_argument("--repo", type=str, required=True, help="Hugging Face repo ID")
     parser.add_argument("--output_dir", type=str, required=True, help="Output directory")
+    parser.add_argument("--token", type=str, default=None, help="Hugging Face access token (optional)")
     args = parser.parse_args()
     
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     
     print(f"Loading dataset {args.repo} from Hugging Face...")
-    ds = load_dataset(args.repo)
+    ds = load_dataset(args.repo, token=args.token)
     
     all_class_names = []
     

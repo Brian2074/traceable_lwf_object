@@ -30,7 +30,7 @@ cd traceable_lwf_object
 pip install -r requirements.txt
 
 # 下載 + 轉換資料集
-python tools/hf2yolo.py
+python tools/hf2yolo.py --repo ARG-NCTU/SPSCD_coco --output_dir datasets/spscd_coco_yolo
 
 # 切成 3 個 Non-IID 分片
 python tools/split_non_iid.py --data_dir datasets/spscd_coco_yolo --clients 3 --alpha 0.5
