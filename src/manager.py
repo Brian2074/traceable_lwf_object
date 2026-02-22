@@ -133,6 +133,8 @@ class Manager:
             name=f"client_{self.client_id}_task_{task_id}_body",
             exist_ok=True,
             verbose=False,
+            cache=False,  # Important: disable RAM caching
+            workers=2,    # Reduce memory spikes
         )
         _cleanup_trainer(self.model.yolo)
 
@@ -170,6 +172,8 @@ class Manager:
             name=f"client_{self.client_id}_task_{task_id}_head",
             exist_ok=True,
             verbose=False,
+            cache=False,  # Important: disable RAM caching
+            workers=2,    # Reduce memory spikes
         )
         _cleanup_trainer(self.model.yolo)
 
@@ -459,6 +463,8 @@ class Manager:
             name=f"client_{self.args.client_id}_val",
             exist_ok=True,
             verbose=False,
+            cache=False,  # Important: disable RAM caching
+            workers=2,    # Reduce memory spikes
         )
         
         # Extract mAP50-95 (mean Average Precision over IoU 0.5:0.95)

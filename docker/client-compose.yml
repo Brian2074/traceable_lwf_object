@@ -30,4 +30,4 @@ services:
               count: 1
               capabilities: [gpu]
         limits:
-          memory: 6G
+          memory: 14G

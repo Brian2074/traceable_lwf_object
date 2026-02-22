@@ -4,11 +4,12 @@
 
 | Machine | Role              | RAM   | GPU       |
 |---------|-------------------|-------|-----------|
-| 本機 A  | Server + Client 0 | 32 GB | RTX 2060  |
-| 電腦 B  | Client 1          | 16 GB | RTX 2060  |
-| 電腦 C  | Client 2          | 16 GB | RTX 2060  |
+| 本機 A  | 👑 專職 Server    | 32 GB | 不跑訓練  |
+| 電腦 B  | 💻 Client 1       | 16 GB | RTX 2060  |
+| 電腦 C  | 💻 Client 2       | 16 GB | RTX 2060  |
 
 > [!IMPORTANT]
+> 專職 Server 架構：本機 A 只負責聚合模型。這能徹底解決邊跑 Server 邊跑 YOLO 導致記憶體崩潰 (OOM Killer) 的問題。
 > 請先在本機用 `ip addr` 或 `hostname -I` 查出本機的 LAN IP（例如 `192.168.1.100`），下面的指令都用這個 IP。
 
 ---
@@ -55,33 +56,17 @@ docker build -t fedrep-yolo:latest -f docker/Dockerfile .
 ```bash
 cd traceable_lwf_object/docker
 
-NUM_CLIENTS=3 \
+NUM_CLIENTS=2 \
 ROUNDS=10 \
 TASKS=1 \
 TASKS_EPOCH=3 \
-EXP_NAME=distributed_3client \
+EXP_NAME=distributed_2client \
   docker compose -f server-compose.yml up
 ```
 
-Server 會開始監聽 `0.0.0.0:8080`，等待 3 個 Client 連入。
+Server 會開始監聽 `0.0.0.0:8080`，等待 2 個 Client 連入。
 
----
 
-## Step 4：啟動 Client 0（本機 A，開另一個終端機）
-
-```bash
-cd traceable_lwf_object/docker
-
-SERVER_ADDRESS=<本機IP>:8080 \
-CLIENT_ID=0 \
-BATCH_SIZE=16 \
-BODY_EPOCHS=5 \
-HEAD_EPOCHS=5 \
-EXP_NAME=distributed_3client \
-  docker compose -f client-compose.yml up
-```
-
----
 
 ## Step 5：啟動 Client 1（電腦 B）
 
