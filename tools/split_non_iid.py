@@ -137,13 +137,19 @@ def main():
         client_yaml_path = base_dir / f"client_{client_id}.yaml"
         client_info = data_info.copy()
         
-        # Point to the new local slice
-        client_info['train'] = str(abs_base / f"client_{client_id}_data" / "images")
-        # Ensure validation points to absolute global validation
-        if 'val' in client_info and not client_info['val'].startswith('/'):
-            client_info['val'] = str(abs_base / client_info['val'])
-        if 'test' in client_info and not client_info['test'].startswith('/'):
-            client_info['test'] = str(abs_base / client_info['test'])
+        # Point to the new local slice (use relative paths from the dataset root)
+        client_info['train'] = f"client_{client_id}_data/images"
+        
+        # Ensure validation and test use relative paths from the dataset root
+        if 'val' in client_info and '/' in client_info['val'] and client_info['val'].startswith('/'):
+            client_info['val'] = os.path.relpath(client_info['val'], abs_base)
+        if 'test' in client_info and '/' in client_info['test'] and client_info['test'].startswith('/'):
+            client_info['test'] = os.path.relpath(client_info['test'], abs_base)
+            
+        # VERY IMPORTANT for Docker: Tell YOLO that these relative paths start at /app/datasets/...
+        # This overrides whatever directory YOLO is currently executing from.
+        docker_base_name = base_dir.name
+        client_info['path'] = f"/app/datasets/{docker_base_name}"
             
         with open(client_yaml_path, 'w') as f:
             yaml.dump(client_info, f, sort_keys=False)

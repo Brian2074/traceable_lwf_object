@@ -113,6 +113,9 @@ def main():
     yaml_dict["nc"] = len(all_class_names)
     yaml_dict["names"] = all_class_names
     
+    # Crucial for YOLOv8: define the root path so relative paths work everywhere (including Docker)
+    yaml_dict["path"] = "."
+    
     yaml_path = out_dir / "data.yaml"
     with open(yaml_path, "w") as f:
         yaml.dump(yaml_dict, f, sort_keys=False)
