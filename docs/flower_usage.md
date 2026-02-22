@@ -41,6 +41,19 @@ The system supports `cifar100`, `tiny_imagenet`, and `mini_imagenet`.
 
 ---
 
+
+### 4. Docker Verification
+If using the Docker deployment method, ensure Docker and the Docker Compose plugin are installed on all machines.
+
+Verify installation:
+```bash
+docker compose version
+```
+*Expected Output*: `Docker Compose version v2.x.x`
+*   If the command fails or shows `v1.x.x`, please install the [current Docker Desktop or Engine](https://docs.docker.com/engine/install/).
+
+---
+
 ## Running with Docker (Recommended)
 
 This project provides separate Docker Compose files for Server and Client deployment, as well as an all-in-one file for local testing.
@@ -48,7 +61,7 @@ This project provides separate Docker Compose files for Server and Client deploy
 ### 1. Local Testing (All-in-One)
 To run everything (Server + 2 Clients) on a single machine:
 ```bash
-docker-compose -f docker/docker-compose.yml up --build
+docker compose -f docker/docker-compose.yml up --build
 ```
 
 ### 2. Distributed Deployment (Production)
@@ -56,7 +69,7 @@ docker-compose -f docker/docker-compose.yml up --build
 #### Server Side
 On the **Server Machine**:
 ```bash
-docker-compose -f docker/server-compose.yml up -d
+docker compose -f docker/server-compose.yml up -d
 ```
 *   This starts the server on port `8080`.
 *   Ensure port `8080` is exposed to the internet/intranet.
@@ -66,12 +79,12 @@ On **each Client Machine**, use `client-compose.yml`. You can configure it dynam
 
 1.  **Start Client 0** (connecting to Server at 192.168.1.100):
     ```bash
-    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=0 docker-compose -f docker/client-compose.yml up -d
+    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=0 docker compose -f docker/client-compose.yml up -d
     ```
 
 2.  **Start Client 1** (on another machine):
     ```bash
-    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=1 docker-compose -f docker/client-compose.yml up -d
+    SERVER_ADDRESS=192.168.1.100:8080 CLIENT_ID=1 docker compose -f docker/client-compose.yml up -d
     ```
 
 **Environment Variables**:

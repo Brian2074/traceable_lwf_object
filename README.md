@@ -1,26 +1,53 @@
-# traceable_lwf_object
-This repo utilize the official code of TagFed paper to implement federated continual learning. See the original [repo](https://github.com/P0werWeirdo/TagFCL) for more details.
+# Federated Continual Object Detection (YOLOv8 + FedRep)
 
-## Features
+Federated Continual Learning for Object Detection using YOLOv8, Federated Representation Learning (FedRep), and Feature-based Knowledge Distillation.
 
-- Migrated to flower to perform federated learning on multiple computers as clients.
+## Project Structure
+
+```
+├── src/                 # Core FL training code
+│   ├── main.py          # Standalone local simulation
+│   ├── client.py        # FedRep client wrapper
+│   ├── manager.py       # Training manager (Body/Head/KD)
+│   ├── option.py        # CLI arguments
+│   ├── start_server.py  # Flower server launcher
+│   ├── start_client.py  # Flower client launcher
+│   ├── flower_strategy.py
+│   ├── models/          # YOLOv8 wrapper, Feature KD
+│   └── utils/
+├── tools/               # Dataset & utility scripts
+│   ├── hf2yolo.py       # HuggingFace → YOLO converter
+│   ├── split_non_iid.py # Dirichlet Non-IID data splitter
+│   ├── coco2yolo.py     # COCO → YOLO converter
+│   └── check_env.py     # Environment checker
+├── weights/             # Pretrained model weights
+├── datasets/            # YOLO-format datasets
+├── docker/              # Dockerfiles & compose files
+├── tests/               # Unit tests
+├── docs/                # Documentation
+└── DEPLOY.md            # Multi-machine deployment guide
+```
 
 ## Quick Start
 
-### Running with Docker
+### 1. Prepare Dataset
 
-**1. Local Testing (All-in-One)**
 ```bash
-docker-compose -f docker/docker-compose.yml up --build
+python tools/hf2yolo.py --repo ARG-NCTU/SPSCD_coco --output_dir datasets/spscd_coco_yolo
+python tools/split_non_iid.py --data_dir datasets/spscd_coco_yolo --clients 3 --alpha 0.5
 ```
 
-**2. Distributed Deployment (Production)**
-*   **Server**: `docker-compose -f docker/server-compose.yml up -d`
-*   **Client**:
-    ```bash
-    SERVER_ADDRESS=<SERVER_IP>:8080 CLIENT_ID=0 docker-compose -f docker/client-compose.yml up -d
-    ```
+### 2. Local Standalone Training
 
-### Detailed Documentation
+```bash
+python src/main.py --model weights/yolov8n.pt --num_clients 2 --tasks_epoch 3
+```
 
-For full details on configuration, adding new clients, and multi-machine setup, please refer to the **[Flower Usage Guide](docs/flower_usage.md)**.
+### 3. Distributed FL Training (Docker)
+
+See [DEPLOY.md](DEPLOY.md) for full multi-machine setup instructions.
+
+```bash
+# All-in-one local test
+docker compose -f docker/docker-compose.yml up --build
+```

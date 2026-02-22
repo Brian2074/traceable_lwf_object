@@ -1,133 +1,148 @@
-import torch
-import math
-import os.path as osp
+"""Main entry point for standalone (non-Flower) YOLOv8n + FedRep training."""
+
+import logging
 import os
-from option import args_parser
-from utils.Fed_utils import *
-from utils.server_utils import *
 
-import models
-import models.layers as nl
-
-from iCIFAR100 import *
-from tiny_imagenet import *
-from mini_imagenet import *
+import numpy as np
+import torch
+from torch.utils.data import DataLoader
 from tqdm import tqdm
-from utils import Metric, classification_accuracy
+
 from client import Client
+from option import args_parser
+from utils.Fed_utils import setup_seed
+
+logger = logging.getLogger(__name__)
 
 
-def record_result(acc, epochs, args, is_backtrack=False, time=0):
-    with open(args.log_path, 'a') as out_file:
-        if is_backtrack:
-            log_str = 'Backtrack Epochs_{}, Time_{}:\n'.format(epochs, time)
-            out_file.write(log_str)
-        else:
-            log_str = 'Epochs_{}:\n'.format(epochs)
-            out_file.write(log_str)
-        
-        acc = np.array(acc)
-        acc_mean = np.mean(acc, axis=0)
+def record_result(
+    acc: list,
+    epoch: int,
+    args: object,
+) -> None:
+    """Append accuracy results to the log file.
 
-        for task_id in range(acc_mean.shape[0]):
-            log_str = 'Task_{}, Accuracy:{:.2f}'.format(task_id + 1, acc_mean[task_id] * 100)
-            out_file.write(log_str + '\n')
-        acc_mean = np.mean(acc_mean)
-        log_str = 'Overall, Accuracy:{:.2f}'.format(acc_mean * 100)
-        out_file.write(log_str + '\n')
-        out_file.write('\n')
-        out_file.flush()
+    Args:
+        acc: List of accuracy values per client.
+        epoch: Current global epoch.
+        args: Parsed arguments.
+    """
+    with open(args.log_path, "a") as f:
+        f.write(f"Epoch_{epoch}:\n")
+        arr = np.array(acc)
+        mean_acc = np.mean(arr)
+        f.write(f"  Mean Accuracy: {mean_acc * 100:.2f}\n")
+        for i, a in enumerate(acc):
+            f.write(f"  Client_{i}: {a * 100:.2f}\n")
+        f.write("\n")
+        f.flush()
 
-def main():
+
+def main() -> None:
+    """Run the standalone FedRep + Feature KD training loop."""
     args = args_parser()
-    num_clients = args.num_clients
-
-    ## seed settings
     setup_seed(args.seed)
 
-    # set server model
-    server_model = models.ServerModel([], {}, args)
+    print(f"\n{'=' * 60}")
+    print(f"  Experiment: {args.exp_name}")
+    print(f"  Model: {args.model}")
+    print(f"  lr={args.lr_local}, bs={args.batch_size}")
+    print(f"  FedRep: body_ep={args.fedrep_body_epochs}, head_ep={args.fedrep_head_epochs}")
+    print(f"  KD: alpha={args.kd_alpha}, layer={args.kd_layer}")
+    print(f"  AMP: {args.use_amp}")
+    print(f"{'=' * 60}\n")
 
-    # transform
-    train_transform = transforms.Compose([transforms.RandomCrop((args.img_size, args.img_size), padding=4),
-                                          transforms.RandomHorizontalFlip(p=0.5),
-                                          transforms.ColorJitter(brightness=0.24705882352941178),
-                                          transforms.ToTensor(),
-                                          transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))])
-    test_transform = transforms.Compose([transforms.Resize(args.img_size), transforms.ToTensor(),
-                                         transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))])
-    
-    # dataset
-    if args.dataset == 'cifar100':
-        train_dataset = iCIFAR100('dataset', transform=train_transform, download=True)
-        test_dataset = iCIFAR100('dataset', test_transform=test_transform, train=False, download=True)
-    elif args.dataset == 'tiny_imagenet':
-        train_dataset = Tiny_Imagenet('./tiny-imagenet-200', train_transform=train_transform,
-                                      test_transform=test_transform)
-        train_dataset.get_data()
-        test_dataset = Tiny_Imagenet('./tiny-imagenet-200', train_transform=train_transform,
-                                      test_transform=test_transform)
-        test_dataset.get_data()
-    else:
-        train_dataset = Mini_Imagenet('./train', train_transform=train_transform, test_transform=test_transform)
-        train_dataset.get_data()
-        test_dataset = Mini_Imagenet('./train', train_transform=train_transform, test_transform=test_transform)
-        test_dataset.get_data()
+    os.makedirs(os.path.dirname(args.log_path), exist_ok=True)
 
-    clients = [Client(args, train_dataset, test_dataset, i) for i in range(num_clients)]
+    # NOTE: Dataset and DataLoader creation is a placeholder.
+    # YOLOv8 requires detection-format datasets (COCO/VOC).
+    # Replace the following with actual dataset setup.
+    train_dataset = None
+    test_dataset = None
 
-    for i in range(1, args.tasks_global + 1):
-        server_model.add_dataset(i, args.numclass)
+    # Create clients
+    clients = [
+        Client(args, train_dataset, test_dataset, i) for i in range(args.num_clients)
+    ]
 
-    for ep in range(args.epochs_global):
-        task_id = (ep // args.tasks_epoch) + 1
+    # Get client-specific yaml paths for this standalone run
+    # We assume download_dataset.py generated datasets/spscd_coco_yolo/client_{id}.yaml
+    yaml_paths = [
+        f"datasets/spscd_coco_yolo/client_{i}.yaml" for i in range(args.num_clients)
+    ]
+
+    num_classes_so_far = 0
+
+    for task_id in range(1, args.tasks_global + 1):
+        num_classes_so_far += args.numclass
+        print(f"\n--- Task {task_id}: {num_classes_so_far} total classes ---")
+
+        # Prepare all clients for new task
         for client in clients:
-            client.train_head(task_id, args.epochs_local // 2)
-        messages_to_server = [ client.get_message(task_id) for client in clients]
-        messages_to_client = train_and_get_message(server_model, messages_to_server, args)
-        for client, msg in zip(clients, messages_to_client):
-            client.train_tail(task_id, args.epochs_local // 2, msg)
-        acc = []
-        for client in clients:
-            acc.append(client.only_validate())
-        record_result(acc, ep + 1, args, is_backtrack=False)
+            client.prepare_new_task(task_id, num_classes_so_far)
 
-        head_region = task_id - args.backtrack_region if task_id - args.backtrack_region > 0 else 1
-        backtrack_time = args.backtrack_time
-        if task_id - head_region == 0:
-            continue
+        # Get client-specific yaml paths for this standalone run
+        # We assume download_dataset.py generated datasets/spscd/client_{id}.yaml
+        yaml_paths = []
+        for c in clients:
+            yaml_path = f"datasets/spscd_coco_yolo/client_{c.client_id}.yaml"
+            if not os.path.exists(yaml_path):
+                logger.error(f"Dataset config not found for client {c.client_id}: {yaml_path}")
+                yaml_path = "datasets/spscd_coco_yolo/data.yaml"
+            yaml_paths.append(yaml_path)
 
-        for bt_time in range(backtrack_time):
-            backtrack_tasks = [ _ for _ in range(head_region, task_id)]
-            total_clients = [ _ for _ in range(num_clients)]
-            time = 0
+        for ep in range(args.tasks_epoch):
+            print(f"\n  Global Round {ep + 1}/{args.tasks_epoch} for Task {task_id}")
+
+            # 1. Train body (global) on each client
+            for c_idx, client in enumerate(clients):
+                client.train_body(task_id, yaml_paths[c_idx])
+
+            # 2. Aggregate body parameters (FedAvg)
+            body_dicts = [c.get_body_state_dict() for c in clients]
+            avg_body = _fedavg_state_dicts(body_dicts)
+
+            # 3. Distribute aggregated body
+            for client in clients:
+                client.load_body_state_dict(avg_body)
+
+            # 4. Train head (local) on each client
+            for c_idx, client in enumerate(clients):
+                client.train_head(task_id, yaml_paths[c_idx])
+
+            # 5. Optional: KD training (after task 1)
+            if args.tasks_global > 1 and args.kd_alpha > 0:
+                for c_idx, client in enumerate(clients):
+                    # Teacher model needs to be created inside manager before kd
+                    client.train_with_kd(task_id, f"datasets/spscd_coco_yolo/client_{c_idx}.yaml")
+
+            # 6. Validate
             acc = []
-            for task_back in backtrack_tasks:
-                time += 1
-                this_time_clients = []
-                if time != len(backtrack_tasks):
-                    this_time_clients = random.sample(total_clients, max(len(total_clients) // len(backtrack_tasks), 1))
-                else:
-                    this_time_clients = total_clients
+            for c_idx, client in enumerate(clients):
+                acc.append(client.validate(yaml_paths[c_idx], task_id))
+            record_result(acc, ep + 1, args)
 
-                total_clients = list(set(total_clients) - set(this_time_clients))
 
-                if this_time_clients == []:
-                    break
-                
-                for t in this_time_clients:
-                    clients[t].train_head(task_back, args.epochs_local // 2)
+def _fedavg_state_dicts(
+    state_dicts: list,
+) -> dict:
+    """Average multiple state dicts (FedAvg).
 
-                messages_to_server = [ clients[t].get_message(task_back) for t in this_time_clients ]
-                messages_to_client = train_and_get_message(server_model, messages_to_server, args)
+    Args:
+        state_dicts: List of state dicts from clients.
 
-                for t, msg in zip(this_time_clients, messages_to_client):
-                    clients[t].train_tail(task_back, args.epochs_local // 2, msg)
-                for t in this_time_clients:
-                    acc.append(clients[t].only_validate())
-            record_result(acc, ep + 1, args, True, bt_time + 1)
-            
+    Returns:
+        Averaged state dict.
+    """
+    if not state_dicts:
+        return {}
 
-if __name__ == '__main__':
+    avg = {}
+    for key in state_dicts[0]:
+        stacked = torch.stack([sd[key].float() for sd in state_dicts])
+        avg[key] = stacked.mean(dim=0)
+    return avg
+
+
+if __name__ == "__main__":
     main()
-    

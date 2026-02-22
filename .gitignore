@@ -1,9 +1,10 @@
-# Datasets
-train/
-tiny-imagenet-200/
-data/
-dataset/
+# Datasets (large, download via tools/)
 datasets/
+train/
+data/
+
+# Pretrained weights (download separately)
+weights/*.pt
 
 # Python
 __pycache__/
@@ -25,3 +26,13 @@ pip-delete-this-directory.txt
 
 # Mac
 .DS_Store
+
+# pytest
+.pytest_cache/
+
+# YOLO training outputs
+runs/
+log/
+
+# Environment
+.env

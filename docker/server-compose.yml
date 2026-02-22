@@ -1,17 +1,23 @@
-version: '3.8'
-
 services:
   server:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    image: tagfcl:latest
-    container_name: tagfcl_server
-    command: python src/start_server.py --num_clients ${NUM_CLIENTS:-2}
+    image: fedrep-yolo:latest
+    container_name: fedrep_server
+    command: >
+      python src/start_server.py
+        --num_clients ${NUM_CLIENTS:-2}
+        --epochs_global ${ROUNDS:-10}
+        --tasks_global ${TASKS:-1}
+        --tasks_epoch ${TASKS_EPOCH:-3}
+        --exp_name ${EXP_NAME:-docker_run}
     ports:
       - "8080:8080"
     volumes:
       - ../src:/app/src
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     deploy:
       resources:
         reservations:
@@ -19,3 +25,5 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+        limits:
+          memory: 4G
