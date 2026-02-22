@@ -20,6 +20,8 @@ services:
       - ../datasets:/app/datasets
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+    shm_size: '4gb'
+    ipc: host
     deploy:
       resources:
         reservations:

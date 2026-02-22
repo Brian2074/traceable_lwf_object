@@ -18,6 +18,8 @@ services:
       - ../src:/app/src
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+    shm_size: '2gb'
+    ipc: host
     deploy:
       resources:
         reservations:
